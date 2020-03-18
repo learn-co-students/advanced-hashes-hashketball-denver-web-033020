@@ -221,6 +221,95 @@ def big_shoe_rebounds
   result
 end
 
+def most_points_scored
+  hash = game_hash
+  most_points=0
+  result=nil
+  hash.each{|team,attributes|
+    players=attributes[:players]
+    players.each{|player_hash|
+      if player_hash[:points] > most_points
+        most_points=player_hash[:points]
+        result = player_hash[:player_name]
+      end
+    }
+  }
+  result
+end
 
+def total_team_points(name)
+  hash = game_hash
+  total=0
+  hash.each{|team,attributes|
+    if attributes[:team_name] == name
+      players=attributes[:players]
+      players.each{|player_hash|
+          total += player_hash[:points]
+    }
+    end
+  }
+  total
+end
 
+def winning_team
+  teams_array=team_names
+  first_team=teams_array[0]
+  second_team=teams_array[1]
+  first_team_points=total_team_points(first_team)
+  second_team_points=total_team_points(second_team)
+  victor=nil
+  
+  if first_team_points > second_team_points
+    victor=first_team
+  elsif first_team_points < second_team_points
+    victor=second_team
+  else
+    victor="Tie Game"
+  end
+  
+  victor
+end
 
+def player_with_longest_name
+  hash = game_hash
+  longest_name_length=0
+  result=nil
+  hash.each{|team,attributes|
+    players=attributes[:players]
+    players.each{|player_hash|
+    player_name=player_hash[:player_name]
+      if player_name.length > longest_name_length
+        longest_name_length=player_name.length
+        result = player_hash[:player_name]
+      end
+    }
+  }
+  result
+end
+
+def most_steals_player
+  hash = game_hash
+  most_steals=0
+  result=nil
+  hash.each{|team,attributes|
+    players=attributes[:players]
+    players.each{|player_hash|
+      if player_hash[:steals] > most_steals
+        most_steals=player_hash[:steals]
+        result = player_hash[:player_name]
+      end
+    }
+  }
+  result
+end
+
+def long_name_steals_a_ton?
+  longest_name = player_with_longest_name
+  most_steals_name = most_steals_player
+  
+  if longest_name == most_steals_player
+    return true
+  else
+    return false
+  end
+end
