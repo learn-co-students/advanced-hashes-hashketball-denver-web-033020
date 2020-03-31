@@ -1,4 +1,6 @@
 require "pry"
+require "pp"
+
 def game_hash 
   {
   :home => {:team_name =>"Brooklyn Nets",
@@ -217,3 +219,122 @@ def big_shoe_rebounds
     rebounds
 end
 
+def most_points_scored
+  player_highest_score =0
+  player_name = nil
+ game_hash.each do |place, team|
+      team.each do |team_info_key, team_info_value|
+        if team_info_key == :players
+          team_info_value.each do |player|
+            if player[:points] > player_highest_score
+              player_highest_score = player[:points]
+              player_name = player[:player_name]
+            end
+          end
+        end
+      end
+    end
+    player_name
+end
+
+
+
+
+
+=begin
+def winning_team
+  team_points =0
+  team_name = nil
+  game_hash.each do |place, team|
+    team.each do |team_info_key, team_info_value|
+      if team_info_key == :players
+        team_info_value.each do |player|
+          if player[:points] > team_points
+            team_points+= player[:points]
+            player_name = player[:player_name]
+          end
+        end
+      end
+    end
+  end
+  team_name
+end
+=end
+
+
+def winning_team
+  homepoints = 0
+  awayPoints = 0
+  winningName = nil
+  game_hash.each do |place, team|
+    team.each do |team_info_key, team_info_value|
+      if team_info_key == :players
+        team_info_value.each do |player|
+          if place == :home
+            homepoints += player[:points]
+          end
+          if place == :away
+            awayPoints += player[:points]
+          end
+        end
+      end
+    end
+  end
+  if homepoints < awayPoints
+    winningName = game_hash[:away][:team_name]
+    puts awayPoints
+    puts winningName
+  end
+  if homepoints > awayPoints
+    winningName = game_hash[:home][:team_name]
+    puts homepoints
+    puts winningName
+  end
+  if homepoints == awayPoints
+    puts "It is a tie"
+  end
+end
+
+def player_with_longest_name
+  nameLength = 0
+  playerName = nil
+  game_hash.each do |place, team|
+      team.each do |team_info_key, team_info_value|
+        if team_info_key == :players
+          team_info_value.each do |player|
+            if player[:player_name].length > nameLength
+              nameLength = player[:player_name].length
+              playerName = player[:player_name]
+            end
+          end
+        end
+      end
+    end
+    playerName
+    puts "#{playerName}'s name is #{nameLength} characters in length"
+end
+
+def long_name_steals_a_ton
+  longestName = player_with_longest_name
+  steals = 0
+  playerName = nil
+  game_hash.each do |place, team|
+      team.each do |team_info_key, team_info_value|
+        if team_info_key == :players
+          team_info_value.each do |player|
+            if player[:steals] > steals
+              steals = player[:steals]
+              playerName = player[:player_name]
+            end
+          end
+        end
+      end
+    end
+    if longestName == playerName
+      puts "true"
+      return true
+    else
+      puts "false"
+      return false
+    end
+end
