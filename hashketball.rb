@@ -1,4 +1,3 @@
-
 def game_hash
   return game = {
     :home => {
@@ -126,6 +125,9 @@ def game_hash
   }
 end
 
+
+
+
 def player_stats(player_name)
   pl = get_player(player_name)
   return {
@@ -138,40 +140,6 @@ def player_stats(player_name)
     :blocks => pl[:blocks],
     :slam_dunks => pl[:slam_dunks]
   }
-end
-
-def num_points_scored(player_name)
-  return get_player(player_name)[:points]
-end
-
-def shoe_size(player_name)
-  return get_player(player_name)[:shoe]
-end
-
-def team_colors(team_name)
-  gh = game_hash
-  if gh[:home][:team_name] == team_name
-    return gh[:home][:colors]
-  else
-    return gh[:away][:colors]
-  end
-end
-
-def team_names
-  gh = game_hash
-  output = []
-  output << gh[:home][:team_name]
-  output << gh[:home][:team_name]
-  return output
-end
-
-def player_numbers(team_name)
-  gh = game_hash
-  if gh[:home][:team_name] == team_name
-    return gh[:home][:players].map  { |k, v| k[:number] }
-  else
-    return gh[:away][:players].map  { |k, v| k[:number] }
-  end
 end
 
 def get_player(player_name)
@@ -192,6 +160,68 @@ def get_player(player_name)
     return away_player
   end
 end
+
+def num_points_scored(player_name)
+  return get_player(player_name)[:points]
+end
+
+# ------------------------------------------
+# INSTRUCTIONS - shoe_size(player_name)
+# ------------------------------------------
+# * Build a method, `shoe_size`, that takes in an argument of a player's name and
+#   returns the shoe size for that player.
+#   * Think about how you will find the shoe size of the correct player. How can
+#     you check and see if a player's name matches the name that has been passed
+#     into the method as an argument?
+def shoe_size(player_name)
+  return get_player(player_name)[:shoe]
+end
+
+
+# ------------------------------------------
+# INSTRUCTIONS - team_colors(team_name)
+# ------------------------------------------
+# * Build a method, `team_colors`, that takes in an argument of the team name and
+#   returns an `Array` of that team's colors.
+def team_colors(team_name)
+  gh = game_hash
+  if gh[:home][:team_name] == team_name
+    return gh[:home][:colors]
+  else
+    return gh[:away][:colors]
+  end
+end
+
+# ------------------------------------------
+# INSTRUCTIONS - team_names() 
+# ------------------------------------------
+# * Build a method, `team_names`, that operates on the game `Hash` to return an
+#   `Array` of the team names.
+def team_names()
+  gh = game_hash
+  output = []
+  output << gh[:home][:team_name]
+  output << gh[:away][:team_name]
+  return output
+end
+
+
+# ------------------------------------------
+# INSTRUCTIONS - team_numbers(team_name)
+# ------------------------------------------
+# * Build a method, `player_numbers`, that takes in an argument of a team name and
+# returns an `Array` of the jersey numbers for that team.
+def player_numbers(team_name)
+  gh = game_hash
+  if gh[:home][:team_name] == team_name
+    return gh[:home][:players].map  { |k, v| k[:number] }
+  else
+    # build an array of the team numbers, based on the provided team 
+    # leveraging the key,value pair for the player stat 
+    return gh[:away][:players].map  { |k, v| k[:number] }
+  end
+end
+
 
 def find_player_with_largest(stat)
   gh = game_hash
