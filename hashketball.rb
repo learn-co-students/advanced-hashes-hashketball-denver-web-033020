@@ -1,4 +1,4 @@
-require "pry"
+require 'pry'
 
 def game_hash 
   {
@@ -117,6 +117,18 @@ def game_hash
   }
 end
 
+def players_array
+  home_players = game_hash[:home]
+  away_players = game_hash[:away]
+binding.pry
+  home_players concat away_players
+
+end
+
+
+def get_player_info_by_name player_name
+
+end
 
 def num_points_scored(player_name)
   game_hash.each do |place, team|
